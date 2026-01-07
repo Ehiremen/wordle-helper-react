@@ -38,3 +38,8 @@ export interface ColorPickerProps {
 export interface WordleRowProps {
     dictionaryStateMutators: DictionaryStateMutators;
 }
+
+export interface ValidWordProps {
+    dictionary: string[];
+    onSortDictionary: Function;
+}

@@ -7,32 +7,37 @@ import { KEY_BEST_GUESS } from './utils/constants';
 import { DictionaryStateMutators } from './interface';
 
 function App() {
-    const [dict, setDict] = useState(new Dictionary());
+    const [dictionaryState, setDictionaryState] = useState(new Dictionary()); // doesn't work if we maintain s dictObject that's not a state
+    const [dictionaryWordsList, setDictionaryWordsList] = useState(
+        dictionaryState.dict
+    ); // passing the list directly allows validWords component to reflect updates when wordleRow modifies the list
     const [rows, setRows] = useState([1]);
     const [showAddRowBtn, setShowAddRowBtn] = useState(true);
 
     const onSortDictionary = (sortBy: string) => {
         if (sortBy === KEY_BEST_GUESS) {
-            dict.sortByBestGuesses();
+            dictionaryState.sortByBestGuesses();
         } else {
-            dict.sortAlphabetically();
+            dictionaryState.sortAlphabetically();
         }
+        setDictionaryWordsList(dictionaryState.dict);
     };
 
     const onSetLetterGray = (letter: string) => {
-        dict.addGrayLetter(letter);
+        dictionaryState.addGrayLetter(letter);
     };
 
     const onSetLetterGreen = (letter: string, pos: number) => {
-        dict.addGreenLetter(letter, pos);
+        dictionaryState.addGreenLetter(letter, pos);
     };
 
     const onSetLetterYellow = (letter: string, pos: number) => {
-        dict.addYellowLetter(letter, pos);
+        dictionaryState.addYellowLetter(letter, pos);
     };
 
     const onUpdateDictionary = () => {
-        dict.updateDictionary();
+        dictionaryState.updateDictionary();
+        setDictionaryWordsList(dictionaryState.dict);
     };
 
     const dictionaryMutators: DictionaryStateMutators = {
@@ -79,7 +84,10 @@ function App() {
                 </button>
             )}
 
-            <ValidWords dictionary={dict} onSortDictionary={onSortDictionary} />
+            <ValidWords
+                dictionary={dictionaryWordsList}
+                onSortDictionary={onSortDictionary}
+            />
         </div>
     );
 }

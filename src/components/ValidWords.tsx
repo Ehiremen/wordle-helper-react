@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import Dictionary from '../utils/dict-logic';
 import '../css/ValidWords.css';
 import { KEY_ALPHA, KEY_BEST_GUESS } from '../utils/constants';
+import { ValidWordProps } from '../interface';
 
-function ValidWords(props: {
-    dictionary: Dictionary;
-    onSortDictionary: Function;
-}) {
+function ValidWords(props: ValidWordProps) {
     const [sortBy, setSortBy] = useState(KEY_ALPHA);
 
     return (
@@ -32,7 +29,7 @@ function ValidWords(props: {
 
             <div className='Word-display-area'>
                 {props.dictionary.length > 0 &&
-                    props.dictionary.dict.map((word) => (
+                    props.dictionary.map((word) => (
                         <span className='Word-item' key={word}>
                             {word}
                         </span>
