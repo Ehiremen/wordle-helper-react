@@ -1,46 +1,18 @@
-# Getting Started with Create React App
+# Wordle helper/companion by Ehiremen
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and runs on http://localhost:3000 when ran locally (`npm run start`).
 
-## Available Scripts
+## About
 
-In the project directory, you can run:
+- Companion (not a solver!) for the NewYorkTimes' [Wordle](https://www.nytimes.com/games/wordle/index.html) game.
+    - the "dictionary" was sourced from https://www.nytimes.com/games-assets/v2/wordle.01277c06b8349a28c4ed9a9282e0b205c6b00cf8.js and may be out of date
+    - if you have a suggestion/improvement regarding the dictionary, either raise a pr or contact me on [LinkedIn](https://linkedin.com/in/Ehiremen)
+- The dictionary gets updated -- to remove invalid words -- as the user inputs the results of their guesses
+    - the dictionary can be sorted either:
+        - alphabetically, which is your regular A-Z sort; or
+        - by "best guess," which sorts by number of unique letters in the word.
+- On clicking "Apply" on any row, cells in that row get locked for editing, and the list of valid guesses gets updated.
 
-### `npm start`
+## Demo
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+![](src/assets/demo.gif)

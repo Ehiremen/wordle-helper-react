@@ -13,7 +13,7 @@ class Dictionary {
         this.dictionaries = new Map();
         this.dictionaries.set(
             KEY_ALPHA,
-            wordleDictionary.map((word) => word.trim().toUpperCase())
+            wordleDictionary.map((word) => word.trim().toUpperCase()).sort()
         );
         this.dictionaries.set(
             KEY_BEST_GUESS,

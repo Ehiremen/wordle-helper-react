@@ -51,7 +51,7 @@ function App() {
         <div className='App'>
             <header className='App-header'>
                 <p>
-                    Wordle Helper (not solver!) by lexy_bot. &nbsp;
+                    Wordle Helper (not solver!) by Ehiremen. &nbsp;
                     <a
                         className='Wordle-link'
                         href='https://www.nytimes.com/games/wordle/index.html'
