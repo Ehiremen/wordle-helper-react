@@ -1,0 +1,20 @@
+.Color-preview-square {
+    width: 1rem;
+    max-width: 1rem;
+    height: 1rem;
+    max-height: 1rem;
+}
+
+.Cell-dropper-img {
+    width: 1.2rem;
+    max-width: 1.2rem;
+    height: 1.2rem;
+    max-height: 1.2rem;
+}
+
+.Color-picker-div {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: auto;
+}

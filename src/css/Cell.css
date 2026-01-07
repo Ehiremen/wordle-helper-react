@@ -1,0 +1,20 @@
+.Wordle-cell {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 4rem;
+    max-width: 4rem;
+    height: 4rem;
+    max-height: 4rem;
+    outline: black solid 1px;
+    position: relative;
+}
+
+.Cell-text-field {
+    width: 1.5rem;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+}

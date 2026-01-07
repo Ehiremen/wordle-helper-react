@@ -1,0 +1,10 @@
+.Wordle-row {
+    display: flex;
+    margin: 0.5rem;
+    align-items: center;
+}
+
+.Apply-btn {
+    margin: 0.5rem;
+    max-height: 2rem;
+}
