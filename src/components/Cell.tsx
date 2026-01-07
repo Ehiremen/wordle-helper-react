@@ -35,6 +35,8 @@ function Cell(props: CellProps) {
                         const newValue = event.target.value.toUpperCase();
                         if (isLetter(newValue)) {
                             props.cellStateMutators.setValue(newValue);
+                        } else {
+                            props.cellStateMutators.setValue('');
                         }
                     }}
                 />
