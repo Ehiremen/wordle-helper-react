@@ -1,12 +1,18 @@
 import { wordleDictionary } from './dict-words';
-import { KEY_ALPHA, KEY_BEST_GUESS } from './constants';
+import {
+    EMPTY_STRING,
+    EMPTY_STRING_TUPLE_LEN_5,
+    KEY_ALPHA,
+    KEY_BEST_GUESS,
+} from './constants';
 
 class Dictionary {
     // choosing to maintain two copies of the dictionaries to avoid having to repeatedly sort
     private dictionaries: Map<string, string[]>;
     private grayLetters: Set<string>;
-    private greenLetters: Map<string, number>;
-    private yellowLetters: Map<string, number>;
+    private greenLetters: [string, string, string, string, string]; // max 5 letters in an attempt
+    private yellowLetters: [string, string, string, string, string];
+    private countsInYellowAndGreen: Map<string, number>;
     private currentSort: string;
 
     public constructor() {
@@ -29,8 +35,9 @@ class Dictionary {
         this.currentSort = KEY_ALPHA;
 
         this.grayLetters = new Set();
-        this.greenLetters = new Map();
-        this.yellowLetters = new Map();
+        this.greenLetters = [...EMPTY_STRING_TUPLE_LEN_5];
+        this.yellowLetters = [...EMPTY_STRING_TUPLE_LEN_5];
+        this.countsInYellowAndGreen = new Map();
     }
 
     get dict() {
@@ -51,18 +58,26 @@ class Dictionary {
     };
 
     addGrayLetter = (char: string) => {
-        if (char === '') return;
+        if (char === EMPTY_STRING) return;
         this.grayLetters.add(char);
     };
 
     addGreenLetter = (char: string, position: number) => {
-        if (char === '') return;
-        this.greenLetters.set(char, position);
+        if (char === EMPTY_STRING) return;
+        this.greenLetters[position] = char;
+        this.countsInYellowAndGreen.set(
+            char,
+            1 + (this.countsInYellowAndGreen.get(char) || 0)
+        );
     };
 
     addYellowLetter = (char: string, position: number) => {
-        if (char === '') return;
-        this.yellowLetters.set(char, position);
+        if (char === EMPTY_STRING) return;
+        this.yellowLetters[position] = char;
+        this.countsInYellowAndGreen.set(
+            char,
+            1 + (this.countsInYellowAndGreen.get(char) || 0)
+        );
     };
 
     updateDictionary = () => {
@@ -76,28 +91,50 @@ class Dictionary {
                 );
             });
 
-            this.greenLetters.forEach((pos, letter) => {
-                this.dictionaries.set(
-                    key,
-                    this.dictionaries.get(key)!.filter((word) => {
-                        // not using indexOf to avoid complications with words that have multiple occurrences of a letter
-                        return word.charAt(pos) === letter;
-                    })
-                );
+            this.greenLetters.forEach((letter, pos) => {
+                if (letter !== EMPTY_STRING) {
+                    this.dictionaries.set(
+                        key,
+                        this.dictionaries.get(key)!.filter((word) => {
+                            // not using indexOf to avoid complications with words that have multiple occurrences of a letter
+                            return word.charAt(pos) === letter;
+                        })
+                    );
+                }
             });
 
-            this.yellowLetters.forEach((pos, letter) => {
+            this.yellowLetters.forEach((letter, pos) => {
+                if (letter !== EMPTY_STRING) {
+                    this.dictionaries.set(
+                        key,
+                        this.dictionaries.get(key)!.filter((word) => {
+                            // not using indexOf to avoid complications with words that have multiple occurrences of a letter
+                            return (
+                                word.includes(letter) &&
+                                word.charAt(pos) !== letter
+                            );
+                        })
+                    );
+                }
+            });
+
+            this.countsInYellowAndGreen.forEach((minCount, char) => {
                 this.dictionaries.set(
                     key,
                     this.dictionaries.get(key)!.filter((word) => {
-                        // not using indexOf to avoid complications with words that have multiple occurrences of a letter
-                        return (
-                            word.includes(letter) && word.charAt(pos) !== letter
-                        );
+                        let regex = new RegExp(char, 'g');
+                        let count = (word.match(regex) || []).length;
+                        return count >= minCount;
                     })
                 );
             });
         });
+
+        // because the dictionary's updated, we don't need to retain these letters.
+        this.grayLetters.clear();
+        this.greenLetters = [...EMPTY_STRING_TUPLE_LEN_5];
+        this.yellowLetters = [...EMPTY_STRING_TUPLE_LEN_5];
+        this.countsInYellowAndGreen.clear();
     };
 
     private numUniqueCharsInWord = (word: string) => {
